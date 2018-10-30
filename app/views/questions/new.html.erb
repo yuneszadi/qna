@@ -1,0 +1,13 @@
+<%= form_for @question do |f| %>
+  <p>
+    <%=  f.label :title %>
+    <%=  f.text_field :title  %><br>
+  </p>
+
+  <p>
+    <%=  f.label :body  %>
+    <%=  f.text_area :body  %><br>
+  </p>
+
+  <%=  f.submit 'Create'  %>
+<% end %>
