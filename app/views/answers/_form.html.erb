@@ -1,0 +1,10 @@
+<%= form_with(model: [@question, @answer], local: true) do |f| %>
+  <p>
+    <%= f.label :body %>
+    <%= f.text_area :body %>
+  </p>
+
+  <p>
+    <%= f.submit 'Create answer' %>
+  </p>
+<% end %>

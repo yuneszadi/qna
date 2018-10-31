@@ -1,0 +1,8 @@
+<%= @question.title %>
+<%= @question.body %>
+
+<%= @question.answers.each do |answer| %>
+  <%= answer.body %>
+<% end %>
+
+<%= render 'answers/form' %>
