@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, only: [ :new, :create ]
+  before_action :authenticate_user!, only: [ :show, :new, :create ]
   before_action :find_question, only: [ :show, :destroy ]
 
   def index
@@ -30,7 +30,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question.destroy if current_user.author_of?(@question)
-    redirect_to questions_path 
+    redirect_to questions_path
   end
 
   private

@@ -7,9 +7,10 @@ require 'rails_helper.rb'
 } do
 
   given!(:questions) { create_list(:question, 2) }
-   scenario 'User wants to see questions' do
+
+  scenario 'User wants to see questions' do
     visit questions_path
 
-    questions.count.times { |i| expect(page).to have_content questions[i].title }
+    questions.each { |question| expect(page).to have_content question.title }
   end
  end
