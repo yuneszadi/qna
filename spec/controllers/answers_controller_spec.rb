@@ -55,7 +55,7 @@ RSpec.describe AnswersController, type: :controller do
       before { sign_in(non_author) }
 
       it 'deletes the answer' do
-        expect { delete :destroy, params: { id: answer } }.to_not change(user.answers, :count)
+        expect { delete :destroy, params: { id: answer } }.to_not change(Answer, :count)
       end
 
       it 'redirect to question/show' do

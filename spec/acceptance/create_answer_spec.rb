@@ -7,14 +7,15 @@ feature 'Create answer on question page', %q{
 
   given(:user) { create(:user) }
   let(:question) { create(:question) }
+  let(:answer) { create(:answer) }
 
    scenario 'Authenticated user creates an valid answer' do
     sign_in(user)
     visit question_path(question)
-    fill_in 'Body' , with: question.body
+    fill_in 'Body' , with: answer.body
     click_on 'Create answer'
     expect(page).to have_content 'Your answer successfully created.'
-    expect(page).to have_content question.body
+    expect(page).to have_content answer.body
   end
 
    scenario 'Un-authenticated user creates answer' do
@@ -23,6 +24,13 @@ feature 'Create answer on question page', %q{
   end
 
    scenario 'Authenticated user creates invalid answer' do
+    sign_in(user)
+    visit question_path(question)
+    click_on 'Create answer'
+    expect(page).to have_content "Body can't be blank"
+  end
+
+  scenario 'Authenticated user creates invalid answer' do
     sign_in(user)
     visit question_path(question)
     click_on 'Create answer'
