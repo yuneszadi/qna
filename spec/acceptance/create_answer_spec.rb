@@ -20,7 +20,7 @@ feature 'Create answer on question page', %q{
 
    scenario 'Un-authenticated user creates answer' do
     visit question_path(question)
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to have_content 'You need to sign in or sign up to answer the question.'
   end
 
    scenario 'Authenticated user creates invalid answer' do

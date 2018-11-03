@@ -28,6 +28,6 @@ require 'rails_helper.rb'
 
    scenario 'Un-authenticated user wants to delete the answer' do
     visit question_path(question)
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to have_content 'You need to sign in or sign up to delete the question'
   end
 end
