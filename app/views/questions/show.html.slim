@@ -1,0 +1,20 @@
+= @question.title
+= @question.body
+
+-if current_user.present?
+  = render 'answers/form'
+else
+  p You need to sign in or sign up to answer the question.
+
+- @question.answers.each do |answer|
+  -if answer.persisted?
+    p= answer.body
+    -if current_user&.author_of?(answer)
+      p= link_to 'Delete answer', answer, method: :delete
+    else
+      p You need to sign in or sign up to delete the answer.
+
+-if current_user&.author_of?(@question)
+   p= link_to 'Delete question', question_path(@question), method: :delete
+else
+   p You need to sign in or sign up to delete the question.
