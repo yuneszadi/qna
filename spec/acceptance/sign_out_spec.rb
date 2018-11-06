@@ -1,4 +1,5 @@
-require 'rails_helper.rb'
+require_relative 'acceptance_helper'
+
  feature 'User sign out', %q{
   In order to exit
   as an authorized user,

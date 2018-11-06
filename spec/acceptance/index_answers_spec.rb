@@ -1,4 +1,5 @@
-require 'rails_helper.rb'
+require_relative 'acceptance_helper'
+
 feature 'Show question with answers list', %q{
   In order to find out
   the answer to the question

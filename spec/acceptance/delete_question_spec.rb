@@ -1,5 +1,6 @@
-require 'rails_helper.rb'
- feature 'Delete question', %q{
+require_relative 'acceptance_helper'
+
+feature 'Delete question', %q{
   In order to delete a question
   as an authenticated user
   I should be the author of

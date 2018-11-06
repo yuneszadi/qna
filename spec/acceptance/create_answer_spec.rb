@@ -1,4 +1,5 @@
-require 'rails_helper.rb'
+require_relative 'acceptance_helper'
+
 feature 'Create answer on question page', %q{
   To answer the question
   as an authenticated user,
