@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, only: [ :new, :create ]
+  before_action :authenticate_user!, only: [ :update, :new, :create ]
   before_action :find_question, only: %i[ create ]
-  before_action :find_answer, only: %i[ destroy ]
+  before_action :find_answer, only: %i[update destroy ]
 
   def create
     @answer = @question.answers.new(answer_params)
@@ -12,6 +12,10 @@ class AnswersController < ApplicationController
     else
       render 'questions/show', notice: 'Your answer was not created.'
     end
+  end
+
+  def update
+    @answer.update(answer_params) if current_user.author_of?(@answer)
   end
 
   def destroy
