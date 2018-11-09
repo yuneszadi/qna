@@ -7,9 +7,15 @@ else
   p You need to sign in or sign up to answer the question.
 
 .answers
-  - @question.answers.each do |answer|
+  - @question.answers.by_best.each do |answer|
       -if answer.persisted?
         p= answer.body
+
+        -if current_user&.author_of?(answer.question)
+          p= link_to "Choose the best", find_best_answer_answer_path(answer), method: :patch, remote: true
+        else
+          p You need to be an author of question to choose best answer.
+
         -if current_user&.author_of?(answer)
           p= link_to 'Delete answer', answer, method: :delete
 
@@ -24,16 +30,17 @@ else
           p You need to sign in or sign up to delete the answer.
 
 -if current_user&.author_of?(@question)
-   p= link_to 'Delete question', question_path(@question), method: :delete
 
-   p= link_to 'Edit question', '', class: 'edit-question-link', data: { question_id: @question.id }
+  p= link_to 'Delete question', question_path(@question), method: :delete
 
-   =form_with model: @question, remote: true do |f|
-     = f.label :title, 'New title'
-     = f.text_field :title
-     = f.label :body, 'New body'
-     = f.text_area :body
-     = f.submit 'Save'
+  p= link_to 'Edit question', '', class: 'edit-question-link', data: { question_id: @question.id }
+
+  =form_with model: @question, remote: true do |f|
+    = f.label :title, 'New title'
+    = f.text_field :title
+    = f.label :body, 'New body'
+    = f.text_area :body
+    = f.submit 'Save'
 
 else
    p You need to sign in or sign up to delete the question.

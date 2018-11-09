@@ -1,0 +1,3 @@
+$('.answers').html('<%= @question.answers.by_best.each do |answer|  %>')
+  <%= j answer.body %>
+<% end %>

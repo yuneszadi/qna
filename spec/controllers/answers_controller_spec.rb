@@ -102,4 +102,43 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #find_best_answer' do
+    let(:answer) { create(:answer, question: question, user: user) }
+
+    context 'user is author of question' do
+      it 'assigns the requested answer to @answer' do
+        patch :find_best_answer, params: { id: answer }, format: :js
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'changes answer attributes' do
+        expect{ patch :find_best_answer, params: { id: answer }, format: :js }.to_not change(answer, :best)
+      end
+
+      it 'render template "find_best_answer"' do
+        patch :find_best_answer, params: { id: answer }, format: :js
+        expect(response).to render_template :find_best_answer
+      end
+    end
+
+    context 'user is not author of question' do
+      before {sign_in(non_author)}
+
+      it 'assigns the requested answer to @answer' do
+        patch :find_best_answer, params: { id: answer }, format: :js
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it "can't changes answer attributes" do
+        expect{ patch :find_best_answer, params: { id: answer }, format: :js }.to_not change(answer, :best)
+      end
+
+      it 'render template "find_best_answer"' do
+        patch :find_best_answer, params: { id: answer }, format: :js
+        expect(response).to render_template :find_best_answer
+      end
+    end
+  end
+
 end
