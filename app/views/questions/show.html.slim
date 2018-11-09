@@ -6,15 +6,41 @@
 else
   p You need to sign in or sign up to answer the question.
 
-- @question.answers.each do |answer|
-  -if answer.persisted?
-    p= answer.body
-    -if current_user&.author_of?(answer)
-      p= link_to 'Delete answer', answer, method: :delete
-    else
-      p You need to sign in or sign up to delete the answer.
+.answers
+  - @question.answers.by_best.each do |answer|
+      -if answer.persisted?
+        p= answer.body
+
+        -if current_user&.author_of?(answer.question)
+          p= link_to "Choose the best", find_best_answer_answer_path(answer), method: :patch, remote: true
+        else
+          p You need to be an author of question to choose best answer.
+
+        -if current_user&.author_of?(answer)
+          p= link_to 'Delete answer', answer, method: :delete
+
+          p= link_to 'Edit answer', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+
+          = form_with model: answer, remote: true, html: { id: "edit-answer-#{answer.id}", class: 'edit-form'} do |f|
+            = f.label :body, 'New answer'
+            = f.text_area :body
+            = f.submit 'Save'
+
+        else
+          p You need to sign in or sign up to delete the answer.
 
 -if current_user&.author_of?(@question)
-   p= link_to 'Delete question', question_path(@question), method: :delete
+
+  p= link_to 'Delete question', question_path(@question), method: :delete
+
+  p= link_to 'Edit question', '', class: 'edit-question-link', data: { question_id: @question.id }
+
+  =form_with model: @question, remote: true do |f|
+    = f.label :title, 'New title'
+    = f.text_field :title
+    = f.label :body, 'New body'
+    = f.text_area :body
+    = f.submit 'Save'
+
 else
    p You need to sign in or sign up to delete the question.

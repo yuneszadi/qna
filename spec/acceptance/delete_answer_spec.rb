@@ -1,5 +1,6 @@
-require 'rails_helper.rb'
- feature 'Delete answer', %q{
+require_relative 'acceptance_helper'
+
+feature 'Delete answer', %q{
   In order to delete a question
   as an authenticated user
   I should be the author of
@@ -10,7 +11,7 @@ require 'rails_helper.rb'
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
 
-   scenario 'The author wants to delete the answer' do
+   scenario 'The author wants to delete the answer', js: true do
     sign_in(user)
     visit question_path(question)
     expect(page).to have_content answer.body

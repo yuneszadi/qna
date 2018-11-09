@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, only: [ :new, :create ]
+  before_action :authenticate_user!, only: [ :update, :new, :create ]
   before_action :find_question, only: %i[ create ]
-  before_action :find_answer, only: %i[ destroy ]
+  before_action :find_answer, only: %i[ update destroy find_best_answer ]
 
   def create
     @answer = @question.answers.new(answer_params)
@@ -14,9 +14,18 @@ class AnswersController < ApplicationController
     end
   end
 
+  def update
+    @answer.update(answer_params) if current_user.author_of?(@answer)
+  end
+
   def destroy
     @answer.destroy if current_user.author_of?(@answer)
     redirect_to question_path(@answer.question)
+  end
+
+  def find_best_answer
+    @question = @answer.question
+    @answer.find_best_answer if current_user.author_of?(@question)
   end
 
   private
@@ -32,5 +41,4 @@ class AnswersController < ApplicationController
   def answer_params
     params.require(:answer).permit(:body)
   end
-
 end
