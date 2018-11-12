@@ -21,6 +21,9 @@ gem 'jquery-rails'
 gem 'selenium-webdriver'
 gem 'geckodriver-helper'
 gem 'database_cleaner'
+gem 'carrierwave'
+gem 'remotipart'
+gem 'cocoon'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
