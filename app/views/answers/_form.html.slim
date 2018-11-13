@@ -4,9 +4,9 @@
   = f.label :body
   = f.text_area :body
 
-  = f.fields_for :attachments do |a|
-    = a.label :file
-    = a.file_field :file
+  p Attachments
+  p
+    = render 'shared/nested_form', form: f
 
   br
   = f.submit 'Create answer'
