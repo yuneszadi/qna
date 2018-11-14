@@ -4,5 +4,9 @@
   = f.label :body
   = f.text_area :body
 
+  p Attachments
+  p
+    = render 'shared/nested_form', form: f
+
   br
   = f.submit 'Create answer'
