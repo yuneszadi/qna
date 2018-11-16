@@ -1,4 +1,6 @@
 class Question < ApplicationRecord
+  include Votable
+
   has_many :answers, dependent: :destroy
   has_many :attachments, as: :attachable
 
@@ -7,4 +9,6 @@ class Question < ApplicationRecord
   validates :title, :body, presence: true
 
   accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: :all_blank
+
+  cattr_accessor :current_user
 end

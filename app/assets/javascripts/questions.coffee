@@ -8,3 +8,9 @@ $ ->
     e.preventDefault();
     $('.edit_question').show();
     $(this).hide();
+
+$ ->
+  $('.vote_link').on 'ajax:success', (e) ->
+    response = e.detail[0];
+    rating = $('.answer_' + response.id).find('.answer_rating').find('.rating');
+    rating.html(response.rating);

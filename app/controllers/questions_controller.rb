@@ -1,6 +1,14 @@
 class QuestionsController < ApplicationController
+  include Voted
+
   before_action :authenticate_user!, only: [ :update, :new, :create, :update ]
   before_action :find_question, only: [ :show, :edit, :update, :destroy ]
+
+  before_action :set_current_user
+
+  def set_current_user
+    Question.current_user = current_user
+  end
 
   def index
     @questions = Question.all
