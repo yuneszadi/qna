@@ -14,13 +14,13 @@ feature 'Vote', %q{
     scenario 'tries to like not his question', js: true do
       visit question_path(question)
       click_on 'like'
-      expect(page).to have_content question.rating
+      expect(page).to have_content 1
     end
 
     scenario 'tries to dislike not his question', js: true do
       visit question_path(question)
       click_on 'dislike'
-      expect(page).to have_content question.rating
+      expect(page).to have_content -1
     end
   end
 

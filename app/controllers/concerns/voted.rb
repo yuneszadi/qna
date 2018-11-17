@@ -6,7 +6,7 @@ module Voted
   end
 
   def like
-    @vote = @entity.like
+    @vote = @entity.like(current_user)
 
     respond_to do |format|
       format.json { render json: { id: @entity.id, rating: @entity.rating } }
@@ -14,7 +14,7 @@ module Voted
   end
 
   def dislike
-    @vote = @entity.dislike
+    @vote = @entity.dislike(current_user)
 
     respond_to do |format|
       format.json { render json: { id: @entity.id, rating: @entity.rating } }

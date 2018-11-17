@@ -5,12 +5,12 @@ module Votable
     has_many :votes, as: :votable
   end
 
-  def like
-    votes.create!(user: current_user, value: 1) if possible_to_vote?
+  def like(user)
+    votes.create!(user: user, value: 1) if possible_to_vote?(user)
   end
 
-  def dislike
-    votes.create!(user: current_user, value: -1) if possible_to_vote?
+  def dislike(user)
+    votes.create!(user: user, value: -1) if possible_to_vote?(user)
   end
 
   def rating
@@ -19,7 +19,7 @@ module Votable
 
   private
 
-  def possible_to_vote?
-    !current_user.author_of?(self) && !votes.exists?(user: current_user)
+  def possible_to_vote?(user)
+    !user.author_of?(self) && !votes.exists?(user: user)
   end
 end
