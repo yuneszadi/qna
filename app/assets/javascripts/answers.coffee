@@ -15,4 +15,17 @@ ready = ->
     rating.html(response.rating);
     location.reload()
 
+  App.cable.subscriptions.create('AnswersChannel', {
+    connected: ->
+      @perform 'follow', question_id: gon.question_id
+    ,
+    received: (data) ->
+      if data.answer.user_id != gon.user_id
+        $('.answers').append(JST['templates/answer'](
+          answer: data.answer,
+          attachments: data.attachments,
+          rating: data.rating
+        ));
+  });
+
 $(document).on('turbolinks:load', ready);

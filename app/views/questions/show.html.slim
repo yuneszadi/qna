@@ -1,4 +1,4 @@
-.question 
+.question
   = @question.title
   = @question.body
 
@@ -20,36 +20,38 @@ else
 .answers
   - @question.answers.by_best.each do |answer|
       -if answer.persisted?
-        p= answer.body
+        div class="answer_#{answer.id}"
+          p= answer.body
 
-        .answer_rating
-          = render 'shared/rating', resource: answer
+          .answer_rating
+            = render 'shared/rating', resource: answer
 
-        ul
-          -answer.attachments.each do |a|
-            li = link_to  a.file.identifier, a.file.url
+          .answer_attachments
+            ul
+              -answer.attachments.each do |a|
+                li = link_to  a.file.identifier, a.file.url
 
-            -if current_user.author_of?(answer)
-              = link_to  "delete", attachment_path(a), method: :delete, remote: true
+                -if current_user.author_of?(answer)
+                  = link_to  "delete", attachment_path(a), method: :delete, remote: true
 
-        -if current_user&.author_of?(answer.question)
-          p= link_to "Choose the best", find_best_answer_answer_path(answer), method: :patch, remote: true
-        else
-          p You need to be an author of question to choose best answer.
+          -if current_user&.author_of?(answer.question)
+            p= link_to "Choose the best", find_best_answer_answer_path(answer), method: :patch, remote: true
+          else
+            p You need to be an author of question to choose best answer.
 
-        -if current_user&.author_of?(answer)
-          p= link_to 'Delete answer', answer, method: :delete
+          -if current_user&.author_of?(answer)
+            p= link_to 'Delete answer', answer, method: :delete
 
-          p= link_to 'Edit answer', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+            p= link_to 'Edit answer', '', class: 'edit-answer-link', data: { answer_id: answer.id }
 
-          = form_with model: answer, remote: true, html: { id: "edit-answer-#{answer.id}", class: 'edit-form'} do |f|
-            = f.label :body, 'New answer'
-            = f.text_area :body
+            = form_with model: answer, remote: true, html: { id: "edit-answer-#{answer.id}", class: 'edit-form'} do |f|
+              = f.label :body, 'New answer'
+              = f.text_area :body
 
-            = f.submit 'Save'
+              = f.submit 'Save'
 
-        else
-          p You need to sign in or sign up to delete the answer.
+          else
+            p You need to sign in or sign up to delete the answer.
 
 -if current_user&.author_of?(@question)
 
