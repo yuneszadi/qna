@@ -5,6 +5,7 @@ RSpec.describe User do
   let!(:user_question) { create(:question, user: user) }
   let!(:question) { create(:question) }
 
+  it { should have_many(:comments) }
 
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
