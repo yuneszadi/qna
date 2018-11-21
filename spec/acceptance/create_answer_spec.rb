@@ -7,7 +7,6 @@ feature 'Create answer on question page', %q{
 } do
 
   given(:user) { create(:user) }
-  given(:user2) { create(:user) }
   let(:question) { create(:question) }
   let(:answer) { create(:answer) }
 
@@ -34,22 +33,23 @@ feature 'Create answer on question page', %q{
 
   context 'multiple sessions' do
     scenario "question appears on another user's page", js: true do
-      Capybara.using_session('user2') do
-        sign_in(user2)
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        sign_in(user)
         visit question_path(question)
       end
 
        Capybara.using_session('user') do
-        sign_in(user)
-        visit question_path(question)
-
-        fill_in 'Body' , with: 'Answer Body'
-        click_on 'Create answer'
-         expect(page).to have_content 'Answer Body'
+         fill_in 'Body' , with: answer.body
+         click_on 'Create answer'
+         expect(page).to have_content answer.body
       end
 
-       Capybara.using_session('user2') do
-         expect(page).to have_content 'Answer Body'
+       Capybara.using_session('guest') do
+         expect(page).to have_content answer.body
       end
     end
   end
