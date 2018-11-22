@@ -2,6 +2,8 @@ doctype html
 html
   head
     title Qna
+    = Gon::Base.render_data
+    = action_cable_meta_tag 
     = csrf_meta_tags
     = csp_meta_tag
 
@@ -13,6 +15,6 @@ html
       = link_to 'Log out', destroy_user_session_path, method: :delete
 
     p class="notice" = notice
-    p class="alert" = alert 
+    p class="alert" = alert
 
     = yield

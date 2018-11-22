@@ -1,0 +1,23 @@
+div class="answer answer-#{@answer.id}"
+  p #{@answer.body}
+  -if @attachments.length > 0
+    p Attachments:
+    ul
+      -for @attachment in @attachments
+        li
+          div [class="attachment-#{@attachment.id}"]
+            a [href="#{@attachment.url}"] #{@attachment.name}
+
+            -if gon.user_id == @answer.user_id
+              a [data-remote="true" data-method="patch", href="attachmennts/#{@attachment.id}"] delete
+
+  -if gon.user_id != @answer.user_id
+      a [data-remote="true" data-method="patch" data-type="json" href="/answers/#{@answer.id}/like"] Like
+      a [data-remote="true" data-method="patch" data-type="json" href="/answers/#{@answer.id}/dislike"] Dislike
+
+  -if gon.user_id == gon.question_user_id
+      a [data-remote="true" data-method="patch" data-type="json" href="/answers/#{@answer.id}/set_best"] Choose the best
+
+  -if gon.user_id == @answer.user_id
+      a [data-remote="true" data-method="delete" data-type="json" href="/answers/#{@answer.id}"] Delete answer
+      a [class="edit-answer-link" data-answer-id="#{@answer.id}" href=""] Edit answer

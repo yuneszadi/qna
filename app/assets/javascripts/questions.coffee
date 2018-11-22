@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 ready = ->
+
   $('.edit-question-link').click (e) ->
     console.log('event')
     e.preventDefault();
@@ -15,6 +16,14 @@ ready = ->
     rating = $('.answer_' + response.id).find('.answer_rating').find('.rating');
     rating.html(response.rating);
     location.reload()
+
+  App.cable.subscriptions.create('QuestionsChannel', {
+    connected: ->
+      @perform 'follow'
+    ,
+    received: (data) ->
+      $('.questions').append data
+  })
 
 
 $(document).on('turbolinks:load', ready);
