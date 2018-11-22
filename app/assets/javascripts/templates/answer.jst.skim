@@ -8,16 +8,16 @@ div class="answer answer-#{@answer.id}"
           div [class="attachment-#{@attachment.id}"]
             a [href="#{@attachment.url}"] #{@attachment.name}
 
-            -if @current_user == @answer.user_id
+            -if gon.user_id == @answer.user_id
               a [data-remote="true" data-method="patch", href="attachmennts/#{@attachment.id}"] delete
 
-  -if @current_user != @answer.user_id
+  -if gon.user_id != @answer.user_id
       a [data-remote="true" data-method="patch" data-type="json" href="/answers/#{@answer.id}/like"] Like
       a [data-remote="true" data-method="patch" data-type="json" href="/answers/#{@answer.id}/dislike"] Dislike
 
-  -if @current_user == @question_author
+  -if gon.user_id == gon.question_user_id
       a [data-remote="true" data-method="patch" data-type="json" href="/answers/#{@answer.id}/set_best"] Choose the best
 
-  -if @current_user == @answer.user_id
+  -if gon.user_id == @answer.user_id
       a [data-remote="true" data-method="delete" data-type="json" href="/answers/#{@answer.id}"] Delete answer
       a [class="edit-answer-link" data-answer-id="#{@answer.id}" href=""] Edit answer

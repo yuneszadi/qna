@@ -50,8 +50,9 @@ feature 'Create answer on question page', %q{
 
        Capybara.using_session('guest') do
          expect(page).to have_content answer.body
+         expect(page).to have_link 'Like'
+         expect(page).to have_link 'Dislike'
       end
     end
   end
-
 end
