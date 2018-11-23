@@ -1,6 +1,8 @@
 class AnswersController < ApplicationController
   include Voted
 
+  respond_to :js, :json
+
   before_action :authenticate_user!, only: [ :update, :new, :create ]
   before_action :find_question, only: %i[ create ]
   before_action :find_answer, only: %i[ update destroy find_best_answer ]
@@ -19,6 +21,7 @@ class AnswersController < ApplicationController
 
   def update
     @answer.update(answer_params) if current_user.author_of?(@answer)
+    respond_with @answer
   end
 
   def destroy
