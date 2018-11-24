@@ -4,5 +4,5 @@
   = f.text_field :title
   = f.label :body
   = f.text_area :body
-  =render 'shared/nested_form', form: f
+  =render 'shared/nested_form', form: f, resource: @question
   = f.submit 'Create'

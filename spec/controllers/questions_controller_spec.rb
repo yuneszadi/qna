@@ -22,14 +22,6 @@ RSpec.describe QuestionsController, type: :controller do
 
     before { get :new }
 
-    it 'build a new Attachment for question' do
-      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
-    end
-
-    it 'build a new Attachment for question' do
-      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
-    end
-
     it 'assigns a new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
     end
@@ -124,11 +116,6 @@ RSpec.describe QuestionsController, type: :controller do
         user_question
         expect { delete :destroy, params: { id: user_question } }.to change(Question, :count).by(-1)
       end
-
-       it 'redirect to index view' do
-        delete :destroy, params: { id: question }
-        expect(response).to redirect_to questions_path
-      end
     end
 
     context "for non-author" do
@@ -138,11 +125,6 @@ RSpec.describe QuestionsController, type: :controller do
        it 'deletes the question' do
         user_question
         expect { delete :destroy, params: { id: user_question } }.to_not change(Question, :count)
-      end
-
-       it 'redirect to index view' do
-        delete :destroy, params: { id: question }
-        expect(response).to redirect_to questions_path
       end
     end
   end
