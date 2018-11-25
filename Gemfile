@@ -27,6 +27,9 @@ gem 'cocoon'
 gem 'gon'
 gem 'skim'
 gem 'responders'
+gem 'omniauth'
+gem 'omniauth-vkontakte'
+gem 'omniauth-github'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -58,6 +61,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem "letter_opener"
 end
 
 group :test, :development do
@@ -65,6 +69,7 @@ group :test, :development do
   gem 'capybara-webkit'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
+  gem 'capybara-email'
 end
 
 group :test do

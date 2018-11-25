@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
-
-  devise_for :users
   root to: "questions#index"
+
+  devise_for :users, controllers: {registrations: 'registrations', omniauth_callbacks: 'omniauth_callbacks'}
+
+  devise_scope :user do
+    get 'edit_email/:id', to: 'registrations#edit_email', as: 'edit_email'
+    patch 'update_email/:id', to: 'registrations#update_email', as: 'update_email'
+  end
 
   concern :votable do
     member do
