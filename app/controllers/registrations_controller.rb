@@ -1,6 +1,8 @@
 class RegistrationsController < Devise::RegistrationsController
   before_action :set_user, only: [:edit_email, :update_email]
 
+  skip_authorization_check
+
   def edit_email
     render 'users/edit_email'
   end

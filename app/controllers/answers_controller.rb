@@ -8,6 +8,8 @@ class AnswersController < ApplicationController
   before_action :find_answer, only: %i[ update destroy find_best_answer ]
   after_action :publish_answer, only: :create
 
+  authorize_resource
+
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user

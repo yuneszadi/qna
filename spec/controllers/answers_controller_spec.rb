@@ -54,9 +54,9 @@ RSpec.describe AnswersController, type: :controller do
         expect { delete :destroy, params: { id: answer }, format: :js  }.to_not change(Answer, :count)
       end
 
-      it 'redirect to question/show' do
+      it 'forbidden' do
         delete :destroy, params: { id: answer }, format: :js
-        expect(response).to redirect_to question_path(question)
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -96,9 +96,9 @@ RSpec.describe AnswersController, type: :controller do
         expect(answer.body).to_not eq 'new_body'
       end
 
-      it 'render "update" template' do
+      it 'forbidden' do
         patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer) }, format: :js
-        expect(response).to render_template :update
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -116,9 +116,9 @@ RSpec.describe AnswersController, type: :controller do
         expect{ patch :find_best_answer, params: { id: answer }, format: :js }.to_not change(answer, :best)
       end
 
-      it 'render template "find_best_answer"' do
+      it 'forbidden' do
         patch :find_best_answer, params: { id: answer }, format: :js
-        expect(response).to render_template :find_best_answer
+        expect(response).to have_http_status(403)
       end
     end
 
@@ -134,11 +134,10 @@ RSpec.describe AnswersController, type: :controller do
         expect{ patch :find_best_answer, params: { id: answer }, format: :js }.to_not change(answer, :best)
       end
 
-      it 'render template "find_best_answer"' do
+      it 'forbidden' do
         patch :find_best_answer, params: { id: answer }, format: :js
-        expect(response).to render_template :find_best_answer
+        expect(response).to have_http_status(403)
       end
     end
   end
-
 end
