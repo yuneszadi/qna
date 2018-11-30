@@ -66,8 +66,7 @@ RSpec.describe Ability, type: :model do
     end
 
     describe 'commented' do
-      it { should be_able_to :create_comment, create(:question) }
-      it { should be_able_to :create_comment, create(:answer) }
+      it { should be_able_to :create, Comment }
     end
   end
 end
