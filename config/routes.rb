@@ -16,6 +16,14 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api do
+    namespace :v1 do
+      resources :profiles, only: :index do
+        get :me, on: :collection
+      end
+    end
+  end
+
   concern :commentable do
     resources :comments, only: [:create, :update, :destroy], shallow: true
   end
