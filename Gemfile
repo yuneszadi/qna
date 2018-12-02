@@ -31,7 +31,7 @@ gem 'omniauth'
 gem 'omniauth-vkontakte'
 gem 'omniauth-github'
 gem 'cancancan'
-gem 'doorkeeper'
+gem 'doorkeeper', '4.2.6'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
