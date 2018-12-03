@@ -35,6 +35,7 @@ gem 'doorkeeper', '4.2.0'
 gem 'active_model_serializers'
 gem 'oj'
 gem 'oj_mimic_json'
+gem "loofah", ">= 2.2.3"
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

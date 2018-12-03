@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resources :profiles, only: :index do
         get :me, on: :collection
       end
+      resources :questions
     end
   end
 
@@ -35,6 +36,7 @@ Rails.application.routes.draw do
       patch :find_best_answer, on: :member
     end
   end
+
 
   mount ActionCable.server => '/cable'
 
