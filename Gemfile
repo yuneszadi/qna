@@ -31,6 +31,7 @@ gem 'omniauth'
 gem 'omniauth-vkontakte'
 gem 'omniauth-github'
 gem 'cancancan'
+gem 'doorkeeper', '4.2.0'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -81,6 +82,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
   gem 'launchy'
+  gem 'json_spec' 
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
