@@ -1,17 +1,19 @@
 require "rails_helper"
+
 describe 'Questions API' do
   describe 'GET /me' do
-    context 'Unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get '/api/v1/questions', params: { format: :json }
-        expect(response).to have_http_status(401)
-      end
+#    context 'Unauthorized' do
+#      it 'returns 401 status if there is no access_token' do
+#        get '/api/v1/questions', params: { format: :json }
+#        expect(response).to have_http_status(401)
+#      end
 
-      it 'returns 401 status if access_token is invalid' do
-        get '/api/v1/questions', params: { access_token: '1234', format: :json }
-        expect(response).to have_http_status(401)
-      end
-    end
+#      it 'returns 401 status if access_token is invalid' do
+#        get '/api/v1/questions', params: { access_token: '1234', format: :json }
+#        expect(response).to have_http_status(401)
+#      end
+#    end
+    it_behaves_like 'API Authenticable'
 
     context 'Authorized' do
       let(:access_token) { create(:access_token) }
@@ -51,6 +53,9 @@ describe 'Questions API' do
         end
       end
     end
+    def send_request(options = {})
+      get '/api/v1/questions', params: { format: :json }.merge(options)
+    end
   end
 
   describe 'GET /show' do
@@ -61,17 +66,18 @@ describe 'Questions API' do
     let!(:attachments) { create_list(:attachment, 2, attachable: question) }
     let(:attachment) { attachments.first }
 
-    context 'Unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get "/api/v1/questions/#{question.id}", params: { format: :json }
-        expect(response).to have_http_status(401)
-      end
+#    context 'Unauthorized' do
+#      it 'returns 401 status if there is no access_token' do
+#        get "/api/v1/questions/#{question.id}", params: { format: :json }
+#        expect(response).to have_http_status(401)
+#      end
 
-      it 'returns 401 status if access_token is invalid' do
-        get "/api/v1/questions/#{question.id}", params: { access_token: '1234', format: :json }
-        expect(response).to have_http_status(401)
-      end
-    end
+#      it 'returns 401 status if access_token is invalid' do
+#        get "/api/v1/questions/#{question.id}", params: { access_token: '1234', format: :json }
+#        expect(response).to have_http_status(401)
+#      end
+#    end
+    it_behaves_like 'API Authenticable'
 
     context 'Authorized' do
       let(:access_token) { create(:access_token) }
@@ -112,6 +118,9 @@ describe 'Questions API' do
         end
       end
     end
+    def send_request(options = {})
+      get "/api/v1/questions/#{question.id}", params: { format: :json }.merge(options)
+    end
   end
 
   describe 'POST /create' do
@@ -120,17 +129,18 @@ describe 'Questions API' do
     let(:attrs) { attributes_for(:question, user: user) }
     let(:invalid_attrs) { attributes_for(:invalid_question, user: user) }
 
-    context 'Unauthorized' do
-      it 'return 401 status if there is no access_token' do
-        get "/api/v1/questions", params: { format: :json }
-        expect(response).to have_http_status(401)
-      end
+#    context 'Unauthorized' do
+#      it 'return 401 status if there is no access_token' do
+#        get "/api/v1/questions", params: { format: :json }
+#        expect(response).to have_http_status(401)
+#      end
+      it_behaves_like 'API Authenticable'
 
-      it 'return 401 status if access_token is invalid' do
-        get "/api/v1/questions", params: { access_token: '1234', format: :json }
-        expect(response).to have_http_status(401)
-      end
-    end
+#      it 'return 401 status if access_token is invalid' do
+#        get "/api/v1/questions", params: { access_token: '1234', format: :json }
+#        expect(response).to have_http_status(401)
+#      end
+#    end
 
     context 'authorized' do
       context 'invalid attributes' do
@@ -163,6 +173,9 @@ describe 'Questions API' do
           expect(response.body).to be_json_eql(user.id.to_json).at_path('user_id')
         end
       end
+    end
+    def send_request(options = {})
+      post "/api/v1/questions/", params: { format: :json }.merge(options)
     end
   end
 end
