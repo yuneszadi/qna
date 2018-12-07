@@ -9,17 +9,7 @@ require "rails_helper"
   let!(:type) { answer.class.name.downcase }
 
   describe 'GET /index' do
-#    context 'Unauthorized' do
-#      it 'returns 401 status if there is no access_token' do
-#        get "/api/v1/questions/#{question.id}/answers", params: { format: :json }
-#        expect(response).to have_http_status(401)
-#      end
 
-#      it '- returns 401 status if access_token is invalid' do
-#        get "/api/v1/questions/#{question.id}/answers", params: { access_token: '1234', format: :json }
-#        expect(response).to have_http_status(401)
-#      end
-#    end
     it_behaves_like "API Authenticable"
 
     context 'Authorized' do
@@ -49,17 +39,6 @@ require "rails_helper"
     let!(:attachments) { create_list(:attachment, 2, attachable: answer) }
     let(:attachment) { attachments.first }
 
-#    context 'Unauthorized' do
-#      it 'returns 401 status if there is no access_token' do
-#        get "/api/v1/answers/#{answer.id}", params: { format: :json }
-#        expect(response).to have_http_status(401)
-#      end
-
-#      it 'returns 401 status if access_token is invalid' do
-#        get "/api/v1/answers/#{answer.id}", params: { access_token: '1234', format: :json }
-#        expect(response).to have_http_status(401)
-#      end
-#    end
     it_behaves_like 'API Authenticable'
 
     context 'Authorized' do
@@ -111,17 +90,6 @@ require "rails_helper"
     let(:access_token) { create(:access_token, resource_owner_id: user.id) }
     let(:attrs) { attributes_for(:answer, user: user) }
 
-#    context 'Unauthorized' do
-#      it 'returns 401 status if there is no access_token' do
-#        post "/api/v1/questions/#{question.id}/answers", params: { format: :json }
-#        expect(response).to have_http_status(401)
-#      end
-
-#      it 'returns 401 status if access_token is invalid' do
-#        post "/api/v1/questions/#{question.id}/answers", params: { access_token: '1234', format: :json }
-#        expect(response).to have_http_status(401)
-#      end
-#    end
     it_behaves_like 'API Authenticable'
 
     context 'authorized' do
