@@ -25,7 +25,12 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def create
-    respond_with(@question = current_user.questions.create(question_params))
+    @question = current_user.questions.new(question_params)
+    if @question.save
+      redirect_to @question, notice: "Your question successfully created."
+    else
+      render :new, notice: 'Your question was not created.'
+    end
   end
 
   def update
