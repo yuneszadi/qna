@@ -8,4 +8,12 @@ RSpec.describe Answer, type: :model do
   it { should validate_presence_of :body}
 
   it { should accept_nested_attributes_for :attachments }
+
+  context "reputation" do
+    let(:user) { create(:user) }
+    let(:question) { create(:question)}
+    subject { build(:answer, user: user, question: question) }
+
+    it_behaves_like 'calculate reputation'
+  end
 end

@@ -26,6 +26,8 @@ class Ability
     can [:update, :destroy], [Question, Answer], user_id: user.id
     can :destroy, Attachment, attachable: { user_id: user.id }
     can_manage_votes
+    can :create, Subscription
+    can :destroy, Subscription, user_id: user.id
 
     can :find_best_answer, Answer do |answer|
       user.author_of?(answer.question)

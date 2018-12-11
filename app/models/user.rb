@@ -10,9 +10,15 @@ class User < ApplicationRecord
   has_many :votes
   has_many :comments
   has_many :authorizations
+  has_many :subscriptions, dependent: :destroy
+  has_many :subscribed_question, through: :subscriptions, source: :question
 
   def author_of?(object)
     object.user_id == self.id
+  end
+
+  def subscribe?(object)
+    object.subscriptions.where(user_id: self.id).exists?
   end
 
   def self.find_for_oauth(auth)
@@ -45,4 +51,12 @@ class User < ApplicationRecord
       "#{auth.provider + auth.uid.to_s}@temporary.com"
     end
   end
+
+  def self.send_daily_digest
+    find_each.each do |user|
+      DailyMailer.digest(user).deliver_later
+    end
+  end
+
+
 end

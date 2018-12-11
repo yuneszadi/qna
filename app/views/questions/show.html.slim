@@ -11,6 +11,13 @@
         p= 'Comments:'
         = render @question.comments
 
+  .subscription
+    -if user_signed_in?
+      -if current_user.subscribe?(@question)
+        p= link_to  "Unsubscribe", subscription_path(@subscription), method: :delete, remote: true
+      -else
+        p= link_to  "Subscribe", question_subscriptions_path(@question), method: :post, remote: true
+
   .question_rating
     = render 'shared/rating', resource: @question
 
@@ -28,7 +35,6 @@ else
 
 .answers
   = render 'answers/answers'
-
 
 -if current_user&.author_of?(@question)
 

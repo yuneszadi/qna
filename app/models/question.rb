@@ -4,6 +4,8 @@ class Question < ApplicationRecord
 
   has_many :answers, dependent: :destroy
   has_many :attachments, as: :attachable
+  has_many :subscriptions, dependent: :destroy
+  has_many :subscribers, through: :subscriptions, source: :user
 
   belongs_to :user
 
@@ -11,12 +13,16 @@ class Question < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: :all_blank
 
-  after_create :calculate_reputation
+  after_create :update_reputation
+  after_create :create_subscription
 
   private
 
-  def calculate_reputation
-    reputation = Reputation.calculate(self)
-    self.user.update(reputation: reputation)
+  def update_reputation
+    CalculateReputationJob.perform_later(self)
+  end
+
+  def create_subscription
+    subscriptions.create(user: user)
   end
 end
