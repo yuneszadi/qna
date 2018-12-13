@@ -32,6 +32,7 @@ RSpec.describe Ability, type: :model do
     describe 'create' do
       it { should be_able_to :create, Question }
       it { should be_able_to :create, Answer }
+      it { should be_able_to :create, Subscription }
     end
 
     describe 'update' do
@@ -51,6 +52,9 @@ RSpec.describe Ability, type: :model do
 
       it { should be_able_to :destroy, create(:attachment, attachable: question), user: user }
       it { should_not be_able_to :destroy, create(:attachment, attachable: question_of_other_user), user: user }
+
+      it { should be_able_to :destroy, create(:subscription, user: user), user: user }
+      it { should_not be_able_to :destroy, create(:subscription, user: other), user: user }
     end
 
     describe 'voted' do

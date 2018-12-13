@@ -36,6 +36,11 @@ gem 'active_model_serializers'
 gem 'oj'
 gem 'oj_mimic_json'
 gem "loofah", ">= 2.2.3"
+#gem "delayed_job_active_record"
+gem 'whenever'
+gem 'sidekiq'
+gem 'sinatra', '>=1.3.0', require: nil
+gem 'sidetiq'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

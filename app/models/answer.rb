@@ -18,4 +18,17 @@ class Answer < ApplicationRecord
       update!(best: true)
     end
   end
+
+  after_create :update_reputation
+  after_create :send_notification
+
+  private
+
+  def update_reputation
+    CalculateReputationJob.perform_later(self)
+  end
+
+  def send_notification
+    AnswerNotificationJob.perform_later(self)
+  end
 end

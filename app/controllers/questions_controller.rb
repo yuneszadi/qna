@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   include Voted
 
-  before_action :authenticate_user!, only: [ :update, :new, :create, :update ]
+  before_action :authenticate_user!, only: [ :update, :new, :create, :show ]
   before_action :find_question, only: [ :show, :edit, :update, :destroy ]
   before_action :build_answer, only: :show
   after_action :publish_question, only: :create
@@ -15,6 +15,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    @subscription = @question.subscriptions.where(user_id: current_user.id).first
     respond_with @question
   end
 
