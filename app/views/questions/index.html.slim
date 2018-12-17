@@ -1,6 +1,6 @@
 .search
   = form_for :search, url: search_path, method: :get do |f|
-    = f.text_field :query
+    = f.text_field :text
     = f.select :resource, Search::OBJECTS
     = f.submit 'Search'
 
