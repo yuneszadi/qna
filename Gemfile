@@ -41,6 +41,8 @@ gem 'whenever'
 gem 'sidekiq'
 gem 'sinatra', '>=1.3.0', require: nil
 gem 'sidetiq'
+gem 'mysql2'
+gem 'thinking-sphinx'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

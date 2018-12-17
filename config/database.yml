@@ -8,7 +8,11 @@ default: &default
 development:
   <<: *default
   database: qa_development
+  user: yunes
+  password: 'password'
 
 test:
   <<: *default
   database: qa_test
+  user: yunes
+  password: 'password'
