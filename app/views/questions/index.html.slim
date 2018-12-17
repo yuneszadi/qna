@@ -1,4 +1,11 @@
+.search
+  = form_for :search, url: search_path, method: :get do |f|
+    = f.text_field :query
+    = f.select :resource, Search::OBJECTS
+    = f.submit 'Search'
+
 p= link_to  'Ask question', new_question_path
+
 ul.questions
   - @questions.each do |question|
     = render 'collection_item', question: question
