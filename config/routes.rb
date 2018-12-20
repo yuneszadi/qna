@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     patch 'update_email/:id', to: 'registrations#update_email', as: 'update_email'
   end
 
+  get :search, to: 'search#index'
+
   concern :votable do
     member do
       patch 'like'
@@ -43,7 +45,7 @@ Rails.application.routes.draw do
       resources :attachments, shallow: true, only: %i[destroy]
       patch :find_best_answer, on: :member
     end
-    resources :subscriptions, only: %i[create destroy], shallow: true 
+    resources :subscriptions, only: %i[create destroy], shallow: true
   end
 
 

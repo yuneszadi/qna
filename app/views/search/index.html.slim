@@ -1,0 +1,5 @@
+.results
+  -if @results.present?
+    ul
+      - @results.each do |result|
+        li = render_result(result)

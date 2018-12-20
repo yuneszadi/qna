@@ -27,4 +27,7 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+dump.rdb
+config/*.sphinx.conf
+db/sphinx
 config/database.yml
