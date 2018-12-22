@@ -1,7 +1,5 @@
 class SearchController < ApplicationController
   def index
-    search_text = params[:search_text]
-    search_object = params[:search_object]
-    @results = Search.results(search_text, search_object)
+    @results = Search.execute(params[:search][:query], params[:search][:resource]) if params[:search][:query].present?
   end
 end

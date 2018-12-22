@@ -1,4 +1,0 @@
-- if object.commentable_type == "Question"
-  = link_to object.text, question_path(object.commentable_id)
-else
-  = link_to object.text, question_path(object.commentable.question)
