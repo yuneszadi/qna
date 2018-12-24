@@ -8,7 +8,7 @@ set :rails_env, :production
 set :stage, :production
 
 set :ssh_options, {
-  keys: "/Users/yunes/.ssh/id_rsa",
+  keys: "/Users/yuneszadi/.ssh/id_rsa",
   forward_agent: true,
   auth_methods: %w(publickey password),
 }
