@@ -7,6 +7,7 @@ set :repo_url, "git@github.com:yuneszadi/qna.git"
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/deployer/qna"
 set :deploy_user, "deployer"
+set :format, :pretty
 
 # Default value for :linked_files is []
 append :linked_files, "config/database.yml", ".env"
