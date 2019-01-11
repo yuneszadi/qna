@@ -9,7 +9,7 @@ set :deploy_to, "/home/deployer/qna"
 set :deploy_user, "deployer"
 set :format, :pretty
 set :rvm_type, :user
-set :rvm_ruby_version, ‘2.5.1’
+set :rvm_ruby_version, '2.5.1'
 
 # Default value for :linked_files is []
 append :linked_files, "config/database.yml", ".env"
