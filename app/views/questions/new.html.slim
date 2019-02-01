@@ -1,8 +1,14 @@
 = render 'shared/errors', resource: @question
 = form_with model: @question do |f|
   = f.label :title
+  p
   = f.text_field :title
+  p
+  p
   = f.label :body
+  p
   = f.text_area :body
+  p
   =render 'shared/nested_form', form: f, resource: @question
+  p
   = f.submit 'Create'

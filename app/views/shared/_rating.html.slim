@@ -1,7 +1,6 @@
 .raiting
-
   p= resource.rating
-
+  
   -if current_user && !current_user.author_of?(resource)
-    = link_to 'like', polymorphic_path(resource, action: :like), class: 'vote_link', method: :patch, remote: true, data: { type: :json }
+    = link_to 'like ', polymorphic_path(resource, action: :like), class: 'vote_link', method: :patch, remote: true, data: { type: :json }
     = link_to 'dislike', polymorphic_path(resource, action: :dislike), class: 'vote_link', method: :patch, remote: true, data: { type: :json }

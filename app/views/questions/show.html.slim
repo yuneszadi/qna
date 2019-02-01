@@ -1,15 +1,30 @@
-.question
-  = @question.title
-  = @question.body
+div
+  .question
+    p
+    = @question.title
+    p
+    = @question.body
+    p
+
+  .question_rating
+    = render 'shared/rating', resource: @question
+  p
 
   .question_comments
     - if user_signed_in?
-      = link_to 'Add comment', '', class: 'add-comment-link', data: {resource_id: @question.id, resource_type: 'question'}
-      = render 'comments/form', resource: @question
+    details
+      summary Your comment:
+      p
+        = render 'comments/form', resource: @question
+      p
 
     - if @question.comments.size > 1
-        p= 'Comments:'
-        = render @question.comments
+        .all_question_comments
+          details
+            summary Comments
+            p
+              = render @question.comments
+    p
 
   .subscription
     -if user_signed_in?
@@ -17,9 +32,6 @@
         p= link_to  "Unsubscribe", subscription_path(@subscription), method: :delete, remote: true
       -else
         p= link_to  "Subscribe", question_subscriptions_path(@question), method: :post, remote: true
-
-  .question_rating
-    = render 'shared/rating', resource: @question
 
   ul
     - @question.attachments.each do |a|
@@ -29,12 +41,16 @@
         = link_to  "delete", attachment_path(a), method: :delete, remote: true
 
 -if current_user.present?
-  = render 'answers/form'
-else
-  p You need to sign in or sign up to answer the question.
+  details
+    summary Your answer:
+    p
+      = render 'answers/form'
 
 .answers
-  = render 'answers/answers'
+  details
+    summary Answers:
+    p
+      = render 'answers/answers'
 
 -if current_user&.author_of?(@question)
 
@@ -43,11 +59,16 @@ else
   p= link_to 'Edit question', '', class: 'edit-question-link', data: { question_id: @question.id }
 
   =form_with model: @question, remote: true do |f|
-    = f.label :title, 'New title'
-    = f.text_field :title
-    = f.label :body, 'New body'
-    = f.text_area :body
-    = f.submit 'Save'
-
-else
-   p You need to sign in or sign up to delete the question.
+  details
+    summary Edit question:
+    p
+      = f.label :title, 'New title'
+      p
+      = f.text_field :title
+      p
+      p
+      = f.label :body, 'New body'
+      p
+      = f.text_area :body
+      p
+      = f.submit 'Save'
