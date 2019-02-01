@@ -58,10 +58,10 @@ div
 
   p= link_to 'Edit question', '', class: 'edit-question-link', data: { question_id: @question.id }
 
-  =form_with model: @question, remote: true do |f|
   details
     summary Edit question:
     p
+    =form_with model: @question, remote: true do |f|
       = f.label :title, 'New title'
       p
       = f.text_field :title
