@@ -47,6 +47,9 @@ gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 gem 'therubyracer'
 gem 'passenger'
+gem 'unicorn'
+gem 'redis-rails'
+
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -83,6 +86,7 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'capistrano-sidekiq', require: false
   gem 'capistrano-ssh-doctor', '~> 1.0'
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :test, :development do
