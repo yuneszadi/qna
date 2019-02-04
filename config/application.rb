@@ -9,6 +9,7 @@ Bundler.require(*Rails.groups)
 module Qna
   class Application < Rails::Application
     # Use the responders controller from the responders gem
+    config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
     config.app_generators.scaffold_controller :responders_controller
 
     # Initialize configuration defaults for originally generated Rails version.
