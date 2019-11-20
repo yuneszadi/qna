@@ -1,74 +1,75 @@
-div
-  .question
-    p
-    = @question.title
-    p
-    = @question.body
+cache @question do
+  div
+    .question
+      p
+      = @question.title
+      p
+      = @question.body
+      p
+
+    .question_rating
+      = render 'shared/rating', resource: @question
     p
 
-  .question_rating
-    = render 'shared/rating', resource: @question
-  p
+    .question_comments
+      - if user_signed_in?
+      details
+        summary Your comment:
+        p
+          = render 'comments/form', resource: @question
+        p
 
-  .question_comments
-    - if user_signed_in?
+      - if @question.comments.size > 1
+          .all_question_comments
+            details
+              summary Comments
+              p
+                = render @question.comments
+      p
+
+    .subscription
+      -if user_signed_in?
+        -if current_user.subscribe?(@question)
+          p= link_to  "Unsubscribe", subscription_path(@subscription), method: :delete, remote: true
+        -else
+          p= link_to  "Subscribe", question_subscriptions_path(@question), method: :post, remote: true
+
+    ul
+      - @question.attachments.each do |a|
+        li= link_to a.file.identifier, a.file.url
+
+        -if current_user.author_of?(@question)
+          = link_to  "delete", attachment_path(a), method: :delete, remote: true
+
+  -if current_user.present?
     details
-      summary Your comment:
+      summary Your answer:
       p
-        = render 'comments/form', resource: @question
+        = render 'answers/form'
+
+  .answers
+    details
+      summary Answers:
       p
+        = render 'answers/answers'
 
-    - if @question.comments.size > 1
-        .all_question_comments
-          details
-            summary Comments
-            p
-              = render @question.comments
-    p
+  -if current_user&.author_of?(@question)
 
-  .subscription
-    -if user_signed_in?
-      -if current_user.subscribe?(@question)
-        p= link_to  "Unsubscribe", subscription_path(@subscription), method: :delete, remote: true
-      -else
-        p= link_to  "Subscribe", question_subscriptions_path(@question), method: :post, remote: true
+    p= link_to 'Delete question', question_path(@question), method: :delete
 
-  ul
-    - @question.attachments.each do |a|
-      li= link_to a.file.identifier, a.file.url
+    p= link_to 'Edit question', '', class: 'edit-question-link', data: { question_id: @question.id }
 
-      -if current_user.author_of?(@question)
-        = link_to  "delete", attachment_path(a), method: :delete, remote: true
-
--if current_user.present?
-  details
-    summary Your answer:
-    p
-      = render 'answers/form'
-
-.answers
-  details
-    summary Answers:
-    p
-      = render 'answers/answers'
-
--if current_user&.author_of?(@question)
-
-  p= link_to 'Delete question', question_path(@question), method: :delete
-
-  p= link_to 'Edit question', '', class: 'edit-question-link', data: { question_id: @question.id }
-
-  details
-    summary Edit question:
-    p
-    =form_with model: @question, remote: true do |f|
-      = f.label :title, 'New title'
+    details
+      summary Edit question:
       p
-      = f.text_field :title
-      p
-      p
-      = f.label :body, 'New body'
-      p
-      = f.text_area :body
-      p
-      = f.submit 'Save'
+      =form_with model: @question, remote: true do |f|
+        = f.label :title, 'New title'
+        p
+        = f.text_field :title
+        p
+        p
+        = f.label :body, 'New body'
+        p
+        = f.text_area :body
+        p
+        = f.submit 'Save'
